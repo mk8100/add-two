@@ -3,6 +3,8 @@ use add_one;
 
 pub type RunResult = Result<(), &'static str>;
 
+const ERR_MSG:&'static str = "Got: 'None' result";
+
 pub fn run(n:f64) -> RunResult {
 
     let a =5;
@@ -21,7 +23,7 @@ pub fn run(n:f64) -> RunResult {
 
     match w {
         Some(_) => Ok( () ),
-        None    => Err( "Got: 'None' result" )
+        None    => Err( ERR_MSG )
     }                
 
 }
@@ -29,8 +31,16 @@ pub fn run(n:f64) -> RunResult {
 
 #[cfg(test)]
 mod tests {
+
+    use super::*;
+
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn should_run_correctly() {
+        assert_eq!(Ok( () ), run(3.0));
+    }
+
+    #[test]
+    fn should_run_with_error() {
+        assert_eq!( Err( ERR_MSG ), run(-3.0))
     }
 }
